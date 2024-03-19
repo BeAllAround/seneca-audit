@@ -49,12 +49,12 @@ async function run() {
       return {x:0.5*msg.x}
     })
 
-  /*
     .message('c:1', async function c1_1(msg) {
       msg.x += 0.1
       return this.prior(msg)
     })
 
+  /*
     .message('d:1', async function d1(msg) {
       if(0===msg.x) throw new Error('BAD')
       await new Promise(r=>setTimeout(r,100*msg.x))
@@ -67,7 +67,7 @@ async function run() {
 
   console.log(seneca);
 
-  for(let i = 0; i < 2; i++) {
+  for(let i = 0; i < 1; i++) {
     console.log( await seneca.post('c:1',{x:i}) )
   }
   console.log( await seneca.post('a:1',{x:2}) )
