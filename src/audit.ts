@@ -88,6 +88,8 @@ function preload(this: any, plugin: any) {
       return
     }
     
+    // console.log('IN: ', msg, spec.data.meta.prior)
+    
     if (actdef) {
       const when = Date.now()
 
@@ -97,7 +99,9 @@ function preload(this: any, plugin: any) {
       
       let properties
       
-      if(properties = intercepted.find(msg)) {
+      // TODO: Do we capture prior as well?
+      if ( (properties = intercepted.find(msg)) 
+        && null == meta.prior) {
         let reducedMsg = {}
         // console.log( properties, msg )
         

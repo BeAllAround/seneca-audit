@@ -56,13 +56,16 @@ function preload(plugin) {
             || (msg && 0 != ignored.length && ignored.find(msg))) {
             return;
         }
+        // console.log('IN: ', msg, spec.data.meta.prior)
         if (actdef) {
             const when = Date.now();
             // console.log('IN', actdef, meta)
             const pat = actdef.pattern;
             const act = actdef.id;
             let properties;
-            if (properties = intercepted.find(msg)) {
+            // TODO: Do we capture prior as well?
+            if ((properties = intercepted.find(msg))
+                && null == meta.prior) {
                 let reducedMsg = {};
                 // console.log( properties, msg )
                 const { include, exclude } = properties;
