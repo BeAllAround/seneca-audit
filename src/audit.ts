@@ -151,12 +151,11 @@ function Audit(this: any, _options: Options) {
   seneca
     .fix('sys:audit')
     
+    /*
     .message('set:record', async function setRecord(this: any, msg: any) {
-      console.log('msg: ', msg)
-      
-      
       
     })
+    */
 
   return {
     exports: {

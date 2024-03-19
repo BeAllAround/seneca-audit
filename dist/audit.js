@@ -104,10 +104,12 @@ function Audit(_options) {
     const root = seneca.root;
     const tdata = root.context.$_sys_Audit;
     seneca
-        .fix('sys:audit')
-        .message('set:record', async function setRecord(msg) {
-        console.log('msg: ', msg);
-    });
+        .fix('sys:audit');
+    /*
+    .message('set:record', async function setRecord(this: any, msg: any) {
+      
+    })
+    */
     return {
         exports: {
             raw: () => tdata
