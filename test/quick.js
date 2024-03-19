@@ -20,7 +20,8 @@ async function run() {
 
       intercept: {
         'c:1': { include: [ 'c', 'x' ], exclude: [] },
-        'a:1': { include: [ 'x' ], exclude: [] }
+        'a:1': { include: [ 'a', 'x' ], exclude: [] },
+        'b:1': { include: [ 'b', 'x' ], exclude: [] },
       },
 
       
@@ -40,11 +41,12 @@ async function run() {
 
     .message('c:1', async function c1_0(msg) {
       await new Promise(r=>setTimeout(r,20))
-      /*
+
+      // console.log('msg.x: ', msg.x)
       let out = await this.post('a:1',{x:msg.x})
       await new Promise(r=>setTimeout(r,30))
       out = await this.post('b:1',{x:msg.x})
-      */
+
       await new Promise(r=>setTimeout(r,40))
       return {x:0.5*msg.x}
     })
@@ -70,6 +72,7 @@ async function run() {
   for(let i = 0; i < 1; i++) {
     console.log( await seneca.post('c:1',{x:i}) )
   }
+
   console.log( await seneca.post('a:1',{x:2}) )
 
   setTimeout(async ()=>{
