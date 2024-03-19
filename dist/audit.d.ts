@@ -2,8 +2,8 @@ type Options = {
     debug: boolean;
     active: boolean;
     ignore: Array<any>;
-    store: any;
-    recordCallback: any;
+    intercept: any;
+    auditCallback: any;
 };
 export type AuditOptions = Partial<Options>;
 declare function Audit(this: any, _options: Options): {

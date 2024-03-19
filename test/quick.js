@@ -13,12 +13,12 @@ async function run() {
     .use(Audit,{
       active: true,
 
-      recordCallback: async (data) => {
+      auditCallback: async (data) => {
         // console.log('ddd: ', data)
         await seneca.entity('sys/audit').save$({ msg: { ...data.msg } })
       },
 
-      store: {
+      intercept: {
         'c:1': { include: [ 'c', 'x' ], exclude: [] },
         'a:1': { include: [ 'x' ], exclude: [] }
       },

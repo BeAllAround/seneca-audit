@@ -10,8 +10,8 @@ type Options = {
   debug: boolean
   active: boolean
   ignore: Array<any>
-  store: any
-  recordCallback: any
+  intercept: any
+  auditCallback: any
 }
 
 // Default options.
@@ -19,8 +19,8 @@ const defaults = {
   debug: false,
   active: false,
   ignore: [ 'plugin: define', 'plugin: init' ],
-  store: {},
-  recordCallback: () => {},
+  intercept: {},
+  auditCallback: () => {},
 }
 
 
@@ -32,14 +32,14 @@ function preload(this: any, plugin: any) {
   const seneca = this
   const root = seneca.root
   const options: AuditOptions = plugin.options
-  const recordCallback = options.recordCallback || defaults.recordCallback
+  const auditCallback = options.auditCallback || defaults.auditCallback
   const ignore = options.ignore || defaults.ignore
-  const store = options.store || defaults.store
+  const intercept = options.intercept || defaults.intercept
   
   const Patrun = seneca.util.Patrun
   const Jsonic = seneca.util.Jsonic
   const ignored = new Patrun({ gex: true })
-  const stored = new Patrun({ gex: true })
+  const intercepted = new Patrun({ gex: true })
   
   
 
@@ -52,7 +52,7 @@ function preload(this: any, plugin: any) {
   
   /*
   // test
-  async function recordCallback(this: any, msg: any) {
+  async function auditCallback(this: any, msg: any) {
     // console.log('record Callback message: ', msg)
     await seneca.entity('sys/audit').save$({ msg, })
   }
@@ -63,15 +63,15 @@ function preload(this: any, plugin: any) {
     ignored.add('string' == typeof ig ? Jsonic(ig) : ig, 1)
   }
   
-  for(let st in store) {
+  for(let st in intercept) {
     // transform for optimization
-    store[st].include = (store[st].include || [])
+    intercept[st].include = (intercept[st].include || [])
       .reduce((acc: any, v: any) => (acc[v] = true, acc), {})
       
-    store[st].exclude = (store[st].exclude || [])
+    intercept[st].exclude = (intercept[st].exclude || [])
       .reduce((acc: any, v: any) => (acc[v] = true, acc), {})
       
-    stored.add('string' == typeof st ? Jsonic(st) : st, store[st])
+    intercepted.add('string' == typeof st ? Jsonic(st) : st, intercept[st])
   }
   
 
@@ -97,7 +97,7 @@ function preload(this: any, plugin: any) {
       
       let properties
       
-      if(properties = stored.find(msg)) {
+      if(properties = intercepted.find(msg)) {
         let reducedMsg = {}
         // console.log( properties, msg )
         
@@ -112,7 +112,7 @@ function preload(this: any, plugin: any) {
         
         // console.log(reducedMsg)
         
-        recordCallback({ meta, msg: reducedMsg })
+        auditCallback({ meta, msg: reducedMsg })
       }
       
       // console.log('IN', pat, meta.custom)
