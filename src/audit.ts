@@ -66,12 +66,12 @@ function preload(this: any, plugin: any) {
   for(let st in intercept) {
     // transform for optimization
     if (intercept[st].include && intercept[st].include[0] === "*") {
-      intercept[st].include = "*";
+      intercept[st].include = "*"
     } else {
       intercept[st].include = (intercept[st].include || []).reduce(
         (acc: any, v: any) => ((acc[v] = true), acc),
         {}
-      );
+      )
     }
       
     intercept[st].exclude = (intercept[st].exclude || [])
@@ -113,14 +113,14 @@ function preload(this: any, plugin: any) {
         
         const { include, exclude } = properties
         reducedMsg = Object.entries(msg).reduce((acc: any, pair: any) => {
-          const [key, value] = pair;
+          const [key, value] = pair
           if (include === "*" && !exclude[key]) {
-            acc[key] = value;
+            acc[key] = value
           } else if (null != include[key] && null == exclude[key]) {
-            acc[key] = value;
+            acc[key] = value
           }
-          return acc;
-        }, {});
+          return acc
+        }, {})
         
         // console.log(reducedMsg)
         
