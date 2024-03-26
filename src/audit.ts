@@ -65,7 +65,7 @@ function preload(this: any, plugin: any) {
   
   for(let st in intercept) {
     // transform for optimization
-    if (intercept[st].include && intercept[st].include[0] === "*") {
+    if (intercept[st].include && '*' === intercept[st].include[0]) {
       intercept[st].include = "*"
     } else {
       intercept[st].include = (intercept[st].include || []).reduce(
@@ -114,8 +114,11 @@ function preload(this: any, plugin: any) {
         const { include, exclude } = properties
         reducedMsg = Object.entries(msg).reduce((acc: any, pair: any) => {
           const [key, value] = pair
-          if (include === "*" && null == exclude[key]) {
-            acc[key] = value
+          
+          if ('*' === include) {
+            if(!key.endsWith('$') && null == exclude[key]) { 
+              acc[key] = value
+            }
           } else if (null != include[key] && null == exclude[key]) {
             acc[key] = value
           }

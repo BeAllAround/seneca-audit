@@ -40,8 +40,12 @@ function preload(plugin) {
     }
     for (let st in intercept) {
         // transform for optimization
-        intercept[st].include = (intercept[st].include || [])
-            .reduce((acc, v) => (acc[v] = true, acc), {});
+        if (intercept[st].include && '*' === intercept[st].include[0]) {
+            intercept[st].include = "*";
+        }
+        else {
+            intercept[st].include = (intercept[st].include || []).reduce((acc, v) => ((acc[v] = true), acc), {});
+        }
         intercept[st].exclude = (intercept[st].exclude || [])
             .reduce((acc, v) => (acc[v] = true, acc), {});
         intercepted.add('string' == typeof st ? Jsonic(st) : st, intercept[st]);
@@ -71,7 +75,12 @@ function preload(plugin) {
                 const { include, exclude } = properties;
                 reducedMsg = Object.entries(msg).reduce((acc, pair) => {
                     const [key, value] = pair;
-                    if (null != include[key] && null == exclude[key]) {
+                    if ('*' === include) {
+                        if (!key.endsWith('$') && null == exclude[key]) {
+                            acc[key] = value;
+                        }
+                    }
+                    else if (null != include[key] && null == exclude[key]) {
                         acc[key] = value;
                     }
                     return acc;

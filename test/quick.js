@@ -20,8 +20,8 @@ async function run() {
 
       intercept: {
         'c:1': { include: [ 'c', 'x' ], exclude: [] },
-        'a:1': { include: [ 'a', 'x' ], exclude: [] },
         'b:1': { include: [ 'b', 'x' ], exclude: [] },
+        'a:1': { include: '*', exclude: [ 'extra', ] },
       },
 
       
@@ -73,7 +73,7 @@ async function run() {
     console.log( await seneca.post('c:1',{x:i}) )
   }
 
-  console.log( await seneca.post('a:1',{x:2}) )
+  console.log( await seneca.post('a:1',{ x: 2, extra: 8 }) )
 
   setTimeout(async ()=>{
     console.log(await seneca.entity('sys/audit').list$())
