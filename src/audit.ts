@@ -65,8 +65,14 @@ function preload(this: any, plugin: any) {
   
   for(let st in intercept) {
     // transform for optimization
-    intercept[st].include = (intercept[st].include || [])
-      .reduce((acc: any, v: any) => (acc[v] = true, acc), {})
+    if (intercept[st].include && intercept[st].include[0] === "*") {
+      intercept[st].include = "*"
+    } else {
+      intercept[st].include = (intercept[st].include || []).reduce(
+        (acc: any, v: any) => ((acc[v] = true), acc),
+        {}
+      )
+    }
       
     intercept[st].exclude = (intercept[st].exclude || [])
       .reduce((acc: any, v: any) => (acc[v] = true, acc), {})
@@ -107,8 +113,10 @@ function preload(this: any, plugin: any) {
         
         const { include, exclude } = properties
         reducedMsg = Object.entries(msg).reduce((acc: any, pair: any) => {
-          const [ key, value ] = pair
-          if (null != include[key] && null == exclude[key]) {
+          const [key, value] = pair
+          if (include === "*" && null == exclude[key]) {
+            acc[key] = value
+          } else if (null != include[key] && null == exclude[key]) {
             acc[key] = value
           }
           return acc
