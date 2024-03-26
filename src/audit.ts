@@ -116,7 +116,8 @@ function preload(this: any, plugin: any) {
           const [key, value] = pair
           
           if ('*' === include) {
-            if(!key.endsWith('$') && null == exclude[key]) { 
+            // TODO: case for ( !key.endsWith('$') )
+            if(null == exclude[key]) { 
               acc[key] = value
             }
           } else if (null != include[key] && null == exclude[key]) {

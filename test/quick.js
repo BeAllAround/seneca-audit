@@ -21,7 +21,7 @@ async function run() {
       intercept: {
         'c:1': { include: [ 'c', 'x' ], exclude: [] },
         'b:1': { include: [ 'b', 'x' ], exclude: [] },
-        'a:1': { include: '*', exclude: [ 'extra', ] },
+        'a:1': { include: '*', exclude: [ 'extra',] },
       },
 
       

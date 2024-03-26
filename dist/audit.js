@@ -76,7 +76,8 @@ function preload(plugin) {
                 reducedMsg = Object.entries(msg).reduce((acc, pair) => {
                     const [key, value] = pair;
                     if ('*' === include) {
-                        if (!key.endsWith('$') && null == exclude[key]) {
+                        // TODO: case for ( !key.endsWith('$') )
+                        if (null == exclude[key]) {
                             acc[key] = value;
                         }
                     }
