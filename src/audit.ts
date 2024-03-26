@@ -114,7 +114,7 @@ function preload(this: any, plugin: any) {
         const { include, exclude } = properties
         reducedMsg = Object.entries(msg).reduce((acc: any, pair: any) => {
           const [key, value] = pair
-          if (include === "*" && !exclude[key]) {
+          if (include === "*" && null == exclude[key]) {
             acc[key] = value
           } else if (null != include[key] && null == exclude[key]) {
             acc[key] = value
