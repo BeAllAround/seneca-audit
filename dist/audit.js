@@ -40,7 +40,7 @@ function preload(plugin) {
     }
     for (let st in intercept) {
         // transform for optimization
-        if (intercept[st].include && '*' === intercept[st].include[0]) {
+        if (intercept[st].include && '*' === intercept[st].include) {
             intercept[st].include = "*";
         }
         else {

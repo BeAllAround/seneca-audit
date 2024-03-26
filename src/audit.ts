@@ -65,7 +65,7 @@ function preload(this: any, plugin: any) {
   
   for(let st in intercept) {
     // transform for optimization
-    if (intercept[st].include && '*' === intercept[st].include[0]) {
+    if (intercept[st].include && '*' === intercept[st].include) {
       intercept[st].include = "*"
     } else {
       intercept[st].include = (intercept[st].include || []).reduce(
