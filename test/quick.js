@@ -21,13 +21,14 @@ async function run() {
       intercept: {
         'c:1': { include: [ 'c', 'x' ], exclude: [] },
         'b:1': { include: [ 'b', 'x' ], exclude: [] },
-        'a:1': { include: '*', exclude: [ 'extra',] },
+        'a:1': { include: '*', exclude: [ ] },
       },
 
       
     })
 
     .message('a:1', async function a1(msg) {
+      if(0 === msg.extra) throw new Error('BAD')
       await new Promise(r=>setTimeout(r,100))
       return {x:1+msg.x}
     })
@@ -69,15 +70,19 @@ async function run() {
 
   console.log(seneca);
 
+
+
   for(let i = 0; i < 1; i++) {
     console.log( await seneca.post('c:1',{x:i}) )
   }
 
-  console.log( await seneca.post('a:1',{ x: 2, extra: 8 }) )
+  try {
+    console.log( await seneca.post('a:1',{ x: 2, extra: 10 }) )
+  }catch(err) {}
 
   setTimeout(async ()=>{
     console.log(await seneca.entity('sys/audit').list$())
-  }, 111);
+  }, 1111)
 
 
 }
