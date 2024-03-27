@@ -13,7 +13,8 @@ async function run() {
     .use(Audit,{
       active: true,
 
-      auditCallback: async (data) => {
+      auditCallback: async function (data) {
+        const seneca = this
         // console.log('ddd: ', data)
         await seneca.entity('sys/audit').save$({ msg: { ...data.msg } })
       },
@@ -71,6 +72,7 @@ async function run() {
   console.log(seneca);
 
 
+  // await seneca.entity('sys/item').save$({ t_c: Date.now(), modified_by: 'Alex'})
 
   for(let i = 0; i < 1; i++) {
     console.log( await seneca.post('c:1',{x:i}) )

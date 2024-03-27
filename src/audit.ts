@@ -20,7 +20,7 @@ const defaults = {
   active: false,
   ignore: [ 'plugin: define', 'plugin: init' ],
   intercept: {},
-  auditCallback: () => {},
+  auditCallback: function() {},
 }
 
 
@@ -32,7 +32,7 @@ function preload(this: any, plugin: any) {
   const seneca = this
   const root = seneca.root
   const options: AuditOptions = plugin.options
-  const auditCallback = options.auditCallback || defaults.auditCallback
+  const auditCallback = (options.auditCallback || defaults.auditCallback).bind(seneca)
   const ignore = options.ignore || defaults.ignore
   const intercept = options.intercept || defaults.intercept
   
