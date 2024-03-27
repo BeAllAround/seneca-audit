@@ -40,14 +40,10 @@ async function run() {
     .use('promisify')
     .use(Audit,{
       active: true,
-
       auditCallback,
-
       intercept: {
         'sys:entity,base:sys,name:item,cmd:save': { include: '*', exclude: [] },
       },
-
-
     })
     .ready()
 
