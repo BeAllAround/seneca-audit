@@ -98,12 +98,13 @@ function preload(this: any, plugin: any) {
     
     if (actdef) {
       const when = Date.now()
-
-      // console.log('IN', actdef, meta)
+      
       const pat = actdef.pattern
       const act = actdef.id
       
       let properties
+      
+      // console.log('IN', pat, actdef, meta)
       
       // TODO: Do we capture prior as well?
       if ( (properties = intercepted.find(msg)) 
@@ -131,7 +132,6 @@ function preload(this: any, plugin: any) {
         auditCallback({ meta, msg: reducedMsg })
       }
       
-      // console.log('IN', pat, meta.custom)
     }
   }, { after: 'announce' })
 

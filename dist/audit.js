@@ -63,10 +63,10 @@ function preload(plugin) {
         // console.log('IN: ', msg, spec.data.meta.prior)
         if (actdef) {
             const when = Date.now();
-            // console.log('IN', actdef, meta)
             const pat = actdef.pattern;
             const act = actdef.id;
             let properties;
+            // console.log('IN', pat, actdef, meta)
             // TODO: Do we capture prior as well?
             if ((properties = intercepted.find(msg))
                 && null == meta.prior) {
@@ -89,7 +89,6 @@ function preload(plugin) {
                 // console.log(reducedMsg)
                 auditCallback({ meta, msg: reducedMsg });
             }
-            // console.log('IN', pat, meta.custom)
         }
     }, { after: 'announce' });
     /*
