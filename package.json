@@ -1,19 +1,19 @@
 {
-  "name": "@seneca/telemetry",
-  "version": "0.0.3",
-  "main": "dist/telemetry.js",
+  "name": "@seneca/audit",
+  "version": "0.0.1",
+  "main": "dist/audit.js",
   "type": "commonjs",
-  "types": "dist/telemetry.d.ts",
+  "types": "dist/audit.d.ts",
   "description": "Handle incoming messages within other frameworks.",
-  "homepage": "https://github.com/senecajs/seneca-telemetry",
+  "homepage": "https://github.com/senecajs/seneca-audit",
   "keywords": [
     "seneca",
-    "telemetry"
+    "audit"
   ],
   "author": "Richard Rodger - richardrodger.com",
   "repository": {
     "type": "git",
-    "url": "git://github.com/senecajs/seneca-telemetry.git"
+    "url": "git://github.com/senecajs/seneca-audit.git"
   },
   "scripts": {
     "test": "jest --coverage",
@@ -37,6 +37,9 @@
     "node": ">=16"
   },
   "devDependencies": {
+    "seneca": "3.35.2",
+    "seneca-entity": "25.1.3",
+    "seneca-promisify": "3.7.1",
     "@seneca/maintain": "^0.1.0",
     "@types/jest": "^29.5.12",
     "esbuild": "^0.20.1",
@@ -47,9 +50,7 @@
   },
   "peerDependencies": {
     "seneca": ">=3",
+    "seneca-entity": ">=25",
     "seneca-promisify": ">=3"
-  },
-  "dependencies": {
-    "fast-stats": "^0.0.6"
   }
 }
